@@ -1,0 +1,47 @@
+version: '3'
+services:
+
+  tweetbot:
+    build: tweetbot/
+    volumes:
+    - ./tweetbot/:/app
+    depends_on:
+    - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+    - 27017:27017
+
+  # etl_job:
+  #   build: etl_job/
+  #   depends_on:
+  #   - mongodb
+  #   - postgresdb
+  #   volumes:
+  #   - ./etl_job/:/etl_job
+
+  airflow:
+    image: puckel/docker-airflow
+    ports:
+    - "8080:8080"
+    volumes:
+    - ./airflow/dags/:/usr/local/airflow/dags
+    - ./airflow/requirements.txt:/requirements.txt
+    command: ["webserver", "scheduler"]
+    depends_on:
+    - mongodb
+    - postgresdb
+    deploy:
+     resources:
+       limits:
+         memory: "4000M"
+
+  postgresdb:
+    image: postgres
+    ports:
+    - "5555:5432"
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=1234
+    - POSTGRES_DB=tweets
