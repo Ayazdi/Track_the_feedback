@@ -137,3 +137,6 @@ core
 
 # config file
 config.py
+
+# model weight
+model.h5
