@@ -1,7 +1,0 @@
-SQLAlchemy
-pymongo
-psycopg2-binary
-slackclient
-pandas
-vaderSentiment
-scikit-learn
