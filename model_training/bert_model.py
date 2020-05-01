@@ -1,5 +1,5 @@
 import bert
-# from bert import BertModelLayer
+from bert import BertModelLayer
 from tensorflow.keras.models import model_from_json
 
 def read_model():
@@ -10,3 +10,5 @@ def read_model():
     # load weights into new model
     loaded_model.load_weights("model.h5")
     return print(loaded_model.summary())
+    
+read_model()
