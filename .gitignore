@@ -132,7 +132,7 @@ dmypy.json
 # unwanted files
 training.1600000.processed.noemoticon.csv
 tweet-sentiment-extraction.zip
-uncased_L-12_H-768_A-12/*
+model_training/uncased_L-12_H-768_A-12/*
 core
 
 # config file
