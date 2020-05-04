@@ -7,7 +7,7 @@ import bert
 
 from spacy_transformers import TransformersLanguage, TransformersWordPiecer, TransformersTok2Vec
 
-
+# spacy-transformers pipeline for preprocessing
 name = "bert-base-uncased"
 nlp = TransformersLanguage(trf_name=name, meta={"lang": "en"})
 nlp.add_pipe(nlp.create_pipe("sentencizer"))
@@ -17,15 +17,27 @@ nlp.add_pipe(TransformersTok2Vec.from_pretrained(nlp.vocab, name))
 
 
 def load_bert_model():
+    """
+    load the saved trained bert model
+    """
     json_file = open('model.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json, custom_objects={"BertModelLayer": bert.BertModelLayer})
     # load weights into new model
-    return loaded_model.load_weights("model.h5")
+    loaded_model.load_weights("model.h5")
+    return loaded_model
+
 
 
 def sentiment_prediction(text):
+    """
+    Sentiment prediction by preproccessing the text with spacy into word id
+
+    text: the comment for sentiment analysis (str)
+
+    return: prediction - positive, negative or neuteral (str)
+    """
     doc = nlp(text)
     word_id = doc._.trf_word_pieces
     word_id = sequence.pad_sequences([word_id], maxlen = 112, padding='pre')
@@ -43,6 +55,6 @@ def sentiment_prediction(text):
 
 
 if __name__ == '__main__':
-
     loaded_model = load_bert_model()
-    sentiment_prediction('I love Spiced Academy')
+    print(sentiment_prediction('kfc i ve been now working on food items iam happy how it turned out but the usage of bad colors affect the artworks if you want to see more such artworks please comment and do follow'
+))
