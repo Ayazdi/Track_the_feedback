@@ -3,5 +3,9 @@ FROM behzadhakki/amirali_spacy:0.1
 
 WORKDIR /app
 
+RUN pip install pymongo
+RUN pip install SQLAlchemy
+RUN pip install psycopg2-binary
+RUN pip install langdetect
 
-CMD python bert_model.py
+CMD python etl.py

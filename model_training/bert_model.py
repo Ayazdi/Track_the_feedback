@@ -6,7 +6,9 @@ from bert import BertModelLayer
 import bert
 
 from spacy_transformers import TransformersLanguage, TransformersWordPiecer, TransformersTok2Vec
+from load_transform import extract_from_mongodb, extract_data_from_json
 
+import logging
 # spacy-transformers pipeline for preprocessing
 name = "bert-base-uncased"
 nlp = TransformersLanguage(trf_name=name, meta={"lang": "en"})
@@ -28,7 +30,7 @@ def load_bert_model():
     loaded_model.load_weights("model.h5")
     return loaded_model
 
-
+loaded_model = load_bert_model()
 
 def sentiment_prediction(text):
     """
@@ -38,23 +40,26 @@ def sentiment_prediction(text):
 
     return: prediction - positive, negative or neuteral (str)
     """
+    logging.critical(text)
     doc = nlp(text)
     word_id = doc._.trf_word_pieces
     word_id = sequence.pad_sequences([word_id], maxlen = 112, padding='pre')
     y_pred = loaded_model.predict(word_id, verbose=0)
+    
     y_pred_bool = np.argmax(y_pred, axis=1)[0]
-
     if y_pred_bool == 0:
-        prediction = "neuteral"
+        prediction = "neutral"
     if y_pred_bool == 1:
         prediction = "positive"
-    else:
+    if y_pred_bool == 2:
         prediction = "negative"
+    logging.critical(prediction)
 
     return prediction
 
 
-if __name__ == '__main__':
-    loaded_model = load_bert_model()
-    print(sentiment_prediction('kfc i ve been now working on food items iam happy how it turned out but the usage of bad colors affect the artworks if you want to see more such artworks please comment and do follow'
-))
+# if __name__ == '__main__':
+#     json = extract_from_mongodb()
+#     loaded_model = load_bert_model()
+#     print(sentiment_prediction('kfc i ve been now working on food items iam happy how it turned out but the usage of bad colors affect the artworks if you want to see more such artworks please comment and do follow'
+# ))

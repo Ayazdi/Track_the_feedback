@@ -140,3 +140,6 @@ config.py
 
 # model weight
 model.h5
+
+# instagram credentials
+my_setting.json
