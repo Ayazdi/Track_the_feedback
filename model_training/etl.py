@@ -3,16 +3,12 @@ from sqlalchemy import create_engine, exc
 from load_transform import extract_from_mongodb, extract_data_from_json
 from bert_model import load_bert_model, sentiment_prediction
 import time
+import logging
+from config import AWS_PG
 
 
 # Postgres connection
-PG = create_engine('postgres://Khamir:Sy123sy123@covid19.cpovaluu4bal.eu-west-3.rds.amazonaws.com:5432/covid19')
-
-# Extract
-
-
-# Transform
-
+PG = create_engine(AWS_PG)
 
 def sentiment_analysis(df):
     df_analyse = df[(df['language']=='en') & (df['clean_text_en']!=None)]
@@ -21,9 +17,12 @@ def sentiment_analysis(df):
     return df
 
 if __name__ == '__main__':
+        # Extract
         posts = extract_from_mongodb()
+        # Transform
         df = extract_data_from_json(posts)
         df = sentiment_analysis(df)
+        # Load
         df.to_sql('test', PG, if_exists='replace')
 
 
