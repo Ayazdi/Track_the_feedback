@@ -1,24 +1,28 @@
 version: '3'
 services:
 
+  instagram_scraper:
+    build: instagram_scraper/
+    volumes:
+    - ./instagram_scraper/:/app
+    depends_on:
+    - mongodb
+
+
   bert_model:
     # image: tensorflow/tensorflow
     build: model_training/
     volumes:
     - ./model_training/:/app
+    depends_on:
+    - mongodb
 
 
-  # tweetbot:
-  #   build: tweetbot/
-  #   volumes:
-  #   - ./tweetbot/:/app
-  #   depends_on:
-  #   - mongodb
-  #
-  # mongodb:
-  #   image: mongo
-  #   ports:
-  #   - 27017:27017
+
+  mongodb:
+    image: mongo
+    ports:
+    - 27017:27017
   #
   # # etl_job:
   # #   build: etl_job/

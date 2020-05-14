@@ -1,28 +1,32 @@
+"""
+Load scraped data from mongodb in json format and extract and transform the information into a dataframe.
+"""
+
 import pandas as pd
 from pymongo import MongoClient
 from sqlalchemy import create_engine, exc
 import random
 import re
 from langdetect import detect
+import logging
 
 # mongodb connection
-client_mongo = MongoClient('192.168.99.100:27017')
+client_mongo = MongoClient('mongodb')
 db = client_mongo.mongodb
 
 def extract_from_mongodb():
     """gets a random set of posts in a json format from mongodb"""
-    posts = list(db.instagram_randoms.find())
-    if posts:
-        tags = random.choice(posts)
-        return tags
+    posts = list(db.instagram_heineken.find())[-1]
+    logging.critical(len(posts['items']) + len(posts['ranked_items']))
+    return posts
 
 def extract_data_from_json(posts):
     """
-    Extract all the information of each post from the json file and store them in a list.
+    Extract all the information of each post from the json file and store them in a dataframe.
 
     posts: a json file that contain multiple posts
 
-    return: multiple lists contaning the information
+    return: dataframe contaning the information
     """
 
     urls = []
@@ -95,8 +99,11 @@ def extract_data_from_json(posts):
                 # Caption
                 try:
                     caption = item['caption']['text']
-                except KeyError:
+                    if len(caption)>112:
+                        caption = None
+                except TypeError:
                     caption = None
+
                 captions.append(caption)
 
                 # Location, longitude and latitude of the post
@@ -119,21 +126,26 @@ def extract_data_from_json(posts):
                 latitude.append(lat)
 
                 # Hashtags
-                hashtags = re.findall("#\S+", caption.lower())
-                hashtags = ','.join(hashtags)
-                hashtags = re.sub("#",' ', hashtags)
-                if hashtags == '':
+                try:
+                    hashtags = re.findall("#\S+", caption.lower())
+                    hashtags = ','.join(hashtags)
+                    hashtags = re.sub("#",' ', hashtags)
+                    if hashtags == '':
+                        hashtags = None
+                except:
                     hashtags = None
                 caption_tags.append(hashtags)
 
                 # Clean caption with links, hastag or special character
-                text = re.sub("#\S+",'', caption)
-                text = re.sub("@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+", ' ', str(text).lower()).strip()
-                if text != "":
-                    clean_text.append(text)
-                else:
+                try:
+                    text = re.sub("#\S+",'', caption)
+                    text = re.sub("@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+", ' ', str(text).lower()).strip()
+                    if text != "":
+                        clean_text.append(text)
+                    else:
+                        clean_text.append(None)
+                except:
                     clean_text.append(None)
-
 
                 # Written language of the post
                 try:
@@ -146,19 +158,20 @@ def extract_data_from_json(posts):
                'users_id':users_id,
                'users_fullname': users_fullname,
                'user_pk':user_pk,
-               'num_followers':num_followers,
-               'num_followings':num_followings,
-               'urls': urls,
-               'num_likes':num_likes,
-               'num_comments':num_comments,
                'captions':captions,
                'language': language,
                'caption_tags':caption_tags,
                'clean_text_en':clean_text,
                'sentiment':None,
+               'logos':None,
+               'urls': urls,
+               'num_likes':num_likes,
+               'num_comments':num_comments,
                'locations':locations,
                'longitude':longitude,
                'latitude':latitude,
-               'ranked':ranked
+               'ranked':ranked,
+               'num_followers':num_followers,
+               'num_followings':num_followings
                 } )
     return df

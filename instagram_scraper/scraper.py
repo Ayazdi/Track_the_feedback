@@ -22,7 +22,7 @@ api = Client(USER, PASS, settings=cached_settings)
 uuid = Client.generate_uuid()
 
 # Mongodb connection
-client_mongo = MongoClient('192.168.99.100:27017')
+client_mongo = MongoClient('mongodb')
 db = client_mongo.mongodb
 
 def scrape_new_feed(new_tag):
@@ -30,15 +30,12 @@ def scrape_new_feed(new_tag):
     Scrape the posts in one json file and upload it to mongodb
     """
     tags = api.feed_tag(new_tag, uuid)
-    db.insta_test.insert(tags)
+    db.instagram_heineken.insert(tags)
     logging.critical("New posts are coming!!!")
-    return tags
+
 
 if __name__ == '__main__':
-     print("Please enter the tag you want to track:\n")
-     TAG = input()
      while True:
-         tags = scrape_new_feed(TAG)
-         total_post = len(tags['items']) + len(tags['ranked_items'])
-         logging.critical(f"{total_post} posts have been added to the database. Waiting for 2 minutes...")
-         time.sleep(120)
+         scrape_new_feed("heineken")
+         logging.critical("Posts have been added to the database. Waiting for 10 minute...")
+         time.sleep(600)

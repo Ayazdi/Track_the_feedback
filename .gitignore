@@ -134,12 +134,16 @@ training.1600000.processed.noemoticon.csv
 tweet-sentiment-extraction.zip
 model_training/uncased_L-12_H-768_A-12/*
 core
+new_logos
+./instagram_scraper/instagram_api.ipynb
+metabse_images.txt
 
 # config file
 config.py
 
 # model weight
-model.h5
+*.h5
+*.json
 
 # instagram credentials
 my_setting.json
