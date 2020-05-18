@@ -1,9 +1,0 @@
-bert-for-tf2
-numpy
-pandas
-params-flow
-pyyaml
-sentencepiece
-spacy
-torch
-spacy-transformers

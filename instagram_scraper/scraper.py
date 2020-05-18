@@ -3,8 +3,7 @@ This module scrape new instagram posts with the given tags and upload them as
 json files to mongodb every 2 minutes.
 
 """
-from instagram_private_api import Client, ClientCompatPatch
-from instagram_cache import to_json, from_json, onlogin_callback
+from instagram_cache import from_json
 from pymongo import MongoClient
 from config import USER, PASS
 import time
@@ -24,6 +23,7 @@ uuid = Client.generate_uuid()
 # Mongodb connection
 client_mongo = MongoClient('mongodb')
 db = client_mongo.mongodb
+
 
 def scrape_new_feed(new_tag):
     """

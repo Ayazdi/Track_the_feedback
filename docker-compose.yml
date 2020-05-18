@@ -9,11 +9,11 @@ services:
     - mongodb
 
 
-  bert_model:
+  etl:
     # image: tensorflow/tensorflow
-    build: model_training/
+    build: etl/
     volumes:
-    - ./model_training/:/app
+    - ./etl/:/app
     depends_on:
     - mongodb
 
