@@ -142,12 +142,14 @@ vocab.txt
 sentiment_model.ipynb
 
 
+
 # config file
 config.py
 
-# model weight
+# model weights
 *.h5
 *.json
+*.zip
 
 # instagram credentials
 my_setting.json

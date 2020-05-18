@@ -1,7 +1,8 @@
 """
 Load scraped data from mongodb in json format and extract and transform the information into a dataframe.
 """
-
+import sys
+sys.path.append("../")
 import pandas as pd
 from pymongo import MongoClient
 from sqlalchemy import create_engine, exc

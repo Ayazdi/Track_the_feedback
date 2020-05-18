@@ -10,3 +10,4 @@ torch
 spacy-transformers
 matplotlib
 Pillow
+scikit-learn

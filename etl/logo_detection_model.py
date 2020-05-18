@@ -1,3 +1,6 @@
+import sys
+sys.path.append("../")
+
 import numpy as np
 from tensorflow.keras.models import model_from_json
 from tensorflow.keras.applications.inception_v3 import InceptionV3
@@ -9,14 +12,14 @@ import numpy as np
 
 
 labels = {0: 'guinness',
-         1: 'hop-house',
-         2: 'fosters',
-         3: 'carlsberg',
-         4: 'becks',
-         5: 'corona',
-         6: 'heineken',
-         7: 'paulaner',
-         8: 'no-logo'}
+          1: 'hop-house',
+          2: 'fosters',
+          3: 'carlsberg',
+          4: 'becks',
+          5: 'corona',
+          6: 'heineken',
+          7: 'paulaner',
+          8: 'no-logo'}
 
 def load_logo_model(model):
     """

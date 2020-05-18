@@ -1,4 +1,5 @@
-
+import sys
+sys.path.append("../")
 import pandas as pd
 from sqlalchemy import create_engine, exc
 from load_transform import extract_from_mongodb, extract_data_from_json

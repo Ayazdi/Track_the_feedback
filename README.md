@@ -5,7 +5,7 @@ Track The Feedback is a scraper/analyzer data pipeline for extracting posts from
 
 Example:
 
-Defining Guinness as tag in the pipeline:
+Defining Guinness as the tag in the pipeline:
 ![Image and caption analysis of the scraped data](/dashboard.png)
 ![Sentiment analyzed posts with Guinness logo detected](/sentiment_image.png)
 ![Other posts with Guinness logo detected in the images](/guinness_logos.png)
@@ -16,7 +16,7 @@ Defining Guinness as tag in the pipeline:
 
 Data: https://www.kaggle.com/c/tweet-sentiment-extraction/data
 
-**Logo detection model**: This model was trained on FLICKRLOGOS-32 data set provided by University of Augsburg, Institute of Computer Science. From the 32 logo classes available in the data set only 8 of them that were beer logos was used and an extra logo class (Hop-House 13) was added to the data. Highly accurate model was obtained by fine tuning Inception_V3 model and Keras image data generator.
+**Logo detection model**: This model was trained on FLICKRLOGOS-32 data set provided by University of Augsburg, Institute of Computer Science. From the 32 logo classes available in the data set only 8 of them that were beer logos were used and an extra logo class (Hop-House 13) was added to the data. Highly accurate model was obtained by fine tuning Inception_V3 model and Keras image data generator.
 
 Classes:
  - Guinness
@@ -57,3 +57,6 @@ Step-by-step codes and description of the model training available in models fol
 and unzip the files into etl folder
 4. Enter your Instagram credentials, Postgres and mongodb details in the config_example.py
 5. Go to the main folder of the project in the terminal and run docker-compose build and afterwards docker-compose up.
+
+## License
+Free software: MIT License

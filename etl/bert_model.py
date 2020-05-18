@@ -1,3 +1,5 @@
+import sys
+sys.path.append("../")
 import numpy as np
 from tensorflow.keras.models import model_from_json
 from tensorflow.keras.preprocessing import sequence
