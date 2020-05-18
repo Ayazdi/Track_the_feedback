@@ -9,13 +9,13 @@ from spacy_transformers import TransformersLanguage, TransformersWordPiecer, Tra
 from load_transform import extract_from_mongodb, extract_data_from_json
 
 import logging
+
 # spacy-transformers pipeline for preprocessing
 name = "bert-base-uncased"
 nlp = TransformersLanguage(trf_name=name, meta={"lang": "en"})
 nlp.add_pipe(nlp.create_pipe("sentencizer"))
 nlp.add_pipe(TransformersWordPiecer.from_pretrained(nlp.vocab, name))
 nlp.add_pipe(TransformersTok2Vec.from_pretrained(nlp.vocab, name))
-
 
 
 def load_bert_model():
@@ -32,7 +32,9 @@ def load_bert_model():
     logging.critical("Model is ready.")
     return loaded_model
 
+
 loaded_model = load_bert_model()
+
 
 def sentiment_prediction(text):
     """
@@ -46,7 +48,7 @@ def sentiment_prediction(text):
         logging.critical(text)
         doc = nlp(text)
         word_id = doc._.trf_word_pieces
-        word_id = sequence.pad_sequences([word_id], maxlen = 112, padding='pre')
+        word_id = sequence.pad_sequences([word_id], maxlen=112, padding='pre')
         y_pred = loaded_model.predict(word_id, verbose=0)
 
         y_pred_bool = np.argmax(y_pred, axis=1)[0]
