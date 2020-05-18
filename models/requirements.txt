@@ -1,5 +1,5 @@
 tensorflow-estimator==2.0.0
-tensorflow-gpu==2.0.0
+tensorflow-gpu==2.0.1
 bert-for-tf2
 numpy
 pandas
