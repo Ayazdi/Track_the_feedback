@@ -24,6 +24,8 @@ Data: https://www.uni-augsburg.de/en/fakultaet/fai/informatik/prof/mmc/research/
 
 Step-by-step codes and description of the model training available in models folder in jupyter-notebook format.
 
+http://15.188.14.225/public/dashboard/0d6a1d14-24d8-497a-92e8-784d383efae4
+
 ## Tech used:
 - Python
 - Dockers
