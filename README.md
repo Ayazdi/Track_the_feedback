@@ -1,8 +1,15 @@
 # Track The Feedback
-A data pipeline to scrape and analyze posts from social media for tracking feedback on a specific beer product/brand.
 ![Data Pipeline](/data_pipeline.jpg)
 ## Description
 Track The Feedback is a scraper/analyzer data pipeline for extracting posts from social media with the given tags and transform them into structured data(dataframe) using pandas. In addition, the sentiment of the post's captions(only English) are analyzed by custom pre-trained BERT model and beer logos get detected by fine-tuned Inception_v3 logo detector model (more details in the model section). Transformed and analyzed data load to an AWS RDS server on a PostgreSQL database. Finally, a Metabase dashboard(setup on AWS EC2) was created for exploratory data analysis and visualization. The ETL job of the data pipeline is docker containerized due to various dependencies of each step.
+
+Example:
+
+Defining Guinness as tag in the pipeline:
+![Image and caption analysis of the scraped data](/dashboard.png)
+![Sentiment analyzed posts with Guinness logo detected](/sentiment_image.png)
+![Other posts with Guinness logo detected in the images](/guinness_logos.png)
+**Metabase Dashboard**: 	http://15.188.14.225/public/dashboard/0d6a1d14-24d8-497a-92e8-784d383efae4
 
 ## Models:
 **Sentiment analysis model**: This model was trained on the Tweets Sentiment Extraction data set from Kaggle using pre-trained BERT base(12/768) model and SpaCy-Transformers for data pre-processing. The model can predict the sentiment of the post (negative, positive or neutral) with 85% accuracy and 87% average F1 score.
@@ -44,7 +51,7 @@ Step-by-step codes and description of the model training available in models fol
 
 
 ## Usage:
-1. Install Dockers
+1. Install Dockers: https://docs.docker.com/get-docker/
 2. Clone this repository: git clone https://github.com/Ayazdi/Track_the_feedback.git
 3. Download TensorFlow models from here: https://www.dropbox.com/s/vanhum3y5rb5x2d/models.zip?dl=0
 and unzip the files into etl folder
