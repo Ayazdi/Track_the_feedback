@@ -4,6 +4,8 @@ A data pipeline to scrape and analyze posts from social media for tracking feedb
 ## Description
 Track The Feedback is a scraper/analyzer data pipeline for extracting posts from social media with the given tags and transform them into structured data(dataframe) using pandas. In addition, the sentiment of the post's captions are analyzed by custom pre-trained BERT model and beer logos get detected by fine-tuned Inception_v3 logo detector model (more details in the model section). Transformed and analyzed data load to an AWS RDS server on a PostgreS database. Finally, a Metabase dashboard(setup on AWS EC2) was created for exploratory data analysis and visualization. The ETL job of the data pipeline is docker containerized due to various dependencies of each step.
 
+http://15.188.14.225/public/dashboard/0d6a1d14-24d8-497a-92e8-784d383efae4
+
 ## Tech used:
 - Python
 - Dockers
