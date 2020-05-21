@@ -1,5 +1,3 @@
-import sys
-sys.path.append("../")
 import pandas as pd
 from sqlalchemy import create_engine, exc
 from load_transform import extract_from_mongodb, extract_data_from_json
@@ -7,14 +5,14 @@ from bert_model import load_bert_model, sentiment_prediction
 from logo_detection_model import logo_detection
 import time
 import logging
-from config import AWS_PG
+from config import POSTGRES, TAG
 
 
 # Postgres connection
-PG = create_engine(AWS_PG)
+PG = create_engine(POSTGRES)
 # Remove duplicates in Postgres
-QUERY = """ DELETE FROM heineken T1
-            USING   heineken T2
+QUERY = f""" DELETE FROM {TAG} T1
+            USING   {TAG} T2
             WHERE   T1.ctid < T2.ctid
             AND T1.date_time = T2.date_time;
         """
@@ -52,7 +50,7 @@ if __name__ == '__main__':
 
             # Load
             logging.critical("Uploading data to AWS database")
-            df_analized.to_sql('heineken', PG, if_exists='append')
+            df_analized.to_sql(f'{TAG}', PG, if_exists='append')
             PG.execute(QUERY)  # removing the duplicates
             logging.critical("Waiting for 10 minutes...")
         time.sleep(600)

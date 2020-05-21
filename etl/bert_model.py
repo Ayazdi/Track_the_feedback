@@ -1,15 +1,10 @@
-import sys
-sys.path.append("../")
 import numpy as np
 from tensorflow.keras.models import model_from_json
 from tensorflow.keras.preprocessing import sequence
-
 from bert import BertModelLayer
 import bert
-
 from spacy_transformers import TransformersLanguage, TransformersWordPiecer, TransformersTok2Vec
 from load_transform import extract_from_mongodb, extract_data_from_json
-
 import logging
 
 # spacy-transformers pipeline for preprocessing
@@ -64,10 +59,3 @@ def sentiment_prediction(text):
     except:
         prediction = None
     return prediction
-
-
-# if __name__ == '__main__':
-#     json = extract_from_mongodb()
-#     loaded_model = load_bert_model()
-#     print(sentiment_prediction('kfc i ve been now working on food items iam happy how it turned out but the usage of bad colors affect the artworks if you want to see more such artworks please comment and do follow'
-# ))

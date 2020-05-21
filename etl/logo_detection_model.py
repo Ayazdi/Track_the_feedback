@@ -21,6 +21,7 @@ labels = {0: 'guinness',
           7: 'paulaner',
           8: 'no-logo'}
 
+
 def load_logo_model(model):
     """
     load the saved trained logo detection model
@@ -51,7 +52,7 @@ def logo_detection(image_url):
     img = Image.open(urllib.request.urlopen(image_url))
 
     # trasnform to a desireable tensor for the model
-    img = img.resize((224,224), Image.ANTIALIAS)
+    img = img.resize((224, 224), Image.ANTIALIAS)
 
     x = img_to_array(img)/255.
     x = x.reshape((1,) + x.shape)

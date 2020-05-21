@@ -1,12 +1,8 @@
 """
 Load scraped data from mongodb in json format and extract and transform the information into a dataframe.
 """
-import sys
-sys.path.append("../")
 import pandas as pd
 from pymongo import MongoClient
-from sqlalchemy import create_engine, exc
-import random
 import re
 from langdetect import detect
 import logging
@@ -15,11 +11,13 @@ import logging
 client_mongo = MongoClient('mongodb')
 db = client_mongo.mongodb
 
+
 def extract_from_mongodb():
     """gets a random set of posts in a json format from mongodb"""
-    posts = list(db.instagram_heineken.find())[-1]
+    posts = list(db.instagram.find())[-1]
     logging.critical(len(posts['items']) + len(posts['ranked_items']))
     return posts
+
 
 def extract_data_from_json(posts):
     """
@@ -44,13 +42,13 @@ def extract_data_from_json(posts):
     longitude = []
     latitude = []
     user_pk = []
-    num_followers= []
-    num_followings=[]
+    num_followers = []
+    num_followings = []
     ranked = []
 
     for post_type in ['ranked_items', 'items']:
         for item in posts[post_type]:
-            if 'image_versions2' in item.keys(): #only grabbing pictures (no videos or carousels)
+            if 'image_versions2' in item.keys():  # only grabbing pictures (no videos or carousels)
                 if post_type == "ranked_items":
                     # Number of followers and followings of the ranked user
                     # user_info = api.user_detail_info(pk)
@@ -65,7 +63,6 @@ def extract_data_from_json(posts):
                     num_followings.append(None)
                     ranked.append(0)
 
-
                 # Name, id and user primary key
                 full_name = item['user']['full_name']
                 user_id = item['user']['username']
@@ -76,7 +73,7 @@ def extract_data_from_json(posts):
                 user_pk.append(pk)
 
                 # Date and time
-                taken = pd.to_datetime(item['taken_at'], unit ='s')
+                taken = pd.to_datetime(item['taken_at'], unit='s')
                 taken_at.append(taken)
 
                 # Image url
@@ -100,7 +97,7 @@ def extract_data_from_json(posts):
                 # Caption
                 try:
                     caption = item['caption']['text']
-                    if len(caption)>112:
+                    if len(caption) > 112:
                         caption = None
                 except TypeError:
                     caption = None
@@ -130,7 +127,7 @@ def extract_data_from_json(posts):
                 try:
                     hashtags = re.findall("#\S+", caption.lower())
                     hashtags = ','.join(hashtags)
-                    hashtags = re.sub("#",' ', hashtags)
+                    hashtags = re.sub("#", ' ', hashtags)
                     if hashtags == '':
                         hashtags = None
                 except:
@@ -139,7 +136,7 @@ def extract_data_from_json(posts):
 
                 # Clean caption with links, hastag or special character
                 try:
-                    text = re.sub("#\S+",'', caption)
+                    text = re.sub("#\S+", '', caption)
                     text = re.sub("@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+", ' ', str(text).lower()).strip()
                     if text != "":
                         clean_text.append(text)
@@ -155,24 +152,24 @@ def extract_data_from_json(posts):
                     lan = "unkown"
                 language.append(lan)
 
-    df = pd.DataFrame({'date_time':taken_at,
-               'users_id':users_id,
-               'users_fullname': users_fullname,
-               'user_pk':user_pk,
-               'captions':captions,
-               'language': language,
-               'caption_tags':caption_tags,
-               'clean_text_en':clean_text,
-               'sentiment':None,
-               'logos':None,
-               'urls': urls,
-               'num_likes':num_likes,
-               'num_comments':num_comments,
-               'locations':locations,
-               'longitude':longitude,
-               'latitude':latitude,
-               'ranked':ranked,
-               'num_followers':num_followers,
-               'num_followings':num_followings
-                } )
+    df = pd.DataFrame({'date_time': taken_at,
+                       'users_id': users_id,
+                       'users_fullname': users_fullname,
+                       'user_pk': user_pk,
+                       'captions': captions,
+                       'language': language,
+                       'caption_tags': caption_tags,
+                       'clean_text_en': clean_text,
+                       'sentiment': None,
+                       'logos': None,
+                       'urls': urls,
+                       'num_likes': num_likes,
+                       'num_comments': num_comments,
+                       'locations': locations,
+                       'longitude': longitude,
+                       'latitude': latitude,
+                       'ranked': ranked,
+                       'num_followers': num_followers,
+                       'num_followings': num_followings
+                       })
     return df
