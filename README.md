@@ -55,7 +55,7 @@ Step-by-step codes and description of the model training available in models fol
 2. Clone this repository: git clone https://github.com/Ayazdi/Track_the_feedback.git
 3. Download TensorFlow models from here: https://www.dropbox.com/s/vanhum3y5rb5x2d/models.zip?dl=0
 and unzip the files into etl folder
-4. Enter your Instagram credentials, Postgres and mongodb details in the config_example.py
+4. Enter your Instagram credentials, Postgres and the tag you want scrape in the config_example.py and copy it into etl and instagram_scraper
 5. Go to the main folder of the project in the terminal and run docker-compose build and afterwards docker-compose up.
 
 ## License
