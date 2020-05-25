@@ -36,7 +36,7 @@ Step-by-step codes and description of the model training available in models fol
 
 ## Tech used:
 - Python
-- Dockers
+- Docker
 - MongoDB
 - PostgreSQL
 - AWS (RDS, EC2)
@@ -57,6 +57,9 @@ Step-by-step codes and description of the model training available in models fol
 and unzip the files into etl folder
 4. Enter your Instagram credentials, Postgres and the tag you want scrape in the config_example.py and copy it into etl and instagram_scraper
 5. Go to the main folder of the project in the terminal and run docker-compose build and afterwards docker-compose up.
+
+## Contacts:
+https://www.linkedin.com/in/amirali-yazdi-872b5460/
 
 ## License
 Free software: MIT License
