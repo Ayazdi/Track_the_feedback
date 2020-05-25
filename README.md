@@ -5,7 +5,7 @@ Track The Feedback is a scraper/analyzer data pipeline for extracting new feed p
 
 Example:
 
-Defining Guinness as the tag in the pipeline:
+Assigning Guinness as the tag in the pipeline:
 ![Image and caption analysis of the scraped data](/dashboard.png)
 ![Sentiment analyzed posts with Guinness logo detected](/sentiment_image.png)
 ![Other posts with Guinness logo detected in the images](/guinness_logos.png)
