@@ -1,9 +1,7 @@
 # Track The Feedback
 ![Data Pipeline](/data_pipeline.jpg)
 ## Description
-Track The Feedback is a scraper/analyzer data pipeline for extracting new feeds from social media with the given tags and transform them into a data frame format using pandas. In addition, the sentiment of the post's captions (only English) is analyzed by a custom pre-trained BERT model, and product logos detection by fine-tuned Inception_v3 logo detector model (more details in the model section). Transformed and analyzed data load to an AWS RDS server on a PostgreSQL database. Finally, a Metabase dashboard (setup on AWS EC2) was created for exploratory data analysis and visualization. The ETL job of the data pipeline and deployment of the models are docker containerized due to various dependencies of each step.
-
-Example:
+**Track The Feedback** is a scraper/analyzer data pipeline. it extracts new feeds from social media with the given tags and transforms them into a data frame format using **pandas**. Additionally, the sentiment of the post's captions (limited to English for now) is analyzed by a custom pre-trained BERT model. Also, product's logos are detected by fine-tuned Inception_v3 logo detector model (for more information see model's section below). The transformed and analyzed data then loads into an AWS RDS server on a PostgreSQL database. Finally, a Metabase dashboard (setup on AWS EC2) is created for exploratory data analysis and visualization. The ETL job of the data pipeline and deployment of the models are **docker** containerized due to various dependencies of each step. In order to go over the flow of the project an example of a product is given below.
 
 Assigning Guinness as the tag in the pipeline:
 ![Image and caption analysis of the scraped data](/dashboard.png)
