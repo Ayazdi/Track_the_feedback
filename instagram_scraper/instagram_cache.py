@@ -46,10 +46,14 @@ if __name__ == '__main__':
 
     # Example command:
     # python examples/savesettings_logincallback.py -u "yyy" -p "zzz" -settings "test_credentials.json"
-    parser = argparse.ArgumentParser(description='login callback and save settings demo')
-    parser.add_argument('-settings', '--settings', dest='settings_file_path', type=str, required=True)
-    parser.add_argument('-u', '--username', dest='username', type=str, required=True)
-    parser.add_argument('-p', '--password', dest='password', type=str, required=True)
+    parser = argparse.ArgumentParser(
+        description='login callback and save settings demo')
+    parser.add_argument('-settings', '--settings',
+                        dest='settings_file_path', type=str, required=True)
+    parser.add_argument('-u', '--username', dest='username',
+                        type=str, required=True)
+    parser.add_argument('-p', '--password', dest='password',
+                        type=str, required=True)
     parser.add_argument('-debug', '--debug', action='store_true')
 
     args = parser.parse_args()
@@ -82,7 +86,8 @@ if __name__ == '__main__':
                 settings=cached_settings)
 
     except (ClientCookieExpiredError, ClientLoginRequiredError) as e:
-        print('ClientCookieExpiredError/ClientLoginRequiredError: {0!s}'.format(e))
+        print(
+            'ClientCookieExpiredError/ClientLoginRequiredError: {0!s}'.format(e))
 
         # Login expired
         # Do relogin but use default ua, keys and such
@@ -95,7 +100,8 @@ if __name__ == '__main__':
         print('ClientLoginError {0!s}'.format(e))
         exit(9)
     except ClientError as e:
-        print('ClientError {0!s} (Code: {1:d}, Response: {2!s})'.format(e.msg, e.code, e.error_response))
+        print('ClientError {0!s} (Code: {1:d}, Response: {2!s})'.format(
+            e.msg, e.code, e.error_response))
         exit(9)
     except Exception as e:
         print('Unexpected Exception: {0!s}'.format(e))
@@ -103,7 +109,8 @@ if __name__ == '__main__':
 
     # Show when login expires
     cookie_expiry = api.cookie_jar.auth_expires
-    print('Cookie Expiry: {0!s}'.format(datetime.datetime.fromtimestamp(cookie_expiry).strftime('%Y-%m-%dT%H:%M:%SZ')))
+    print('Cookie Expiry: {0!s}'.format(datetime.datetime.fromtimestamp(
+        cookie_expiry).strftime('%Y-%m-%dT%H:%M:%SZ')))
 
     # Call the api
     results = api.user_feed('2958144170')

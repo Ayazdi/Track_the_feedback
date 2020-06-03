@@ -6,4 +6,4 @@ PASS = 'password'
 TAG = 'tag'
 
 # Postgres connection string
-POSTGES = 'postgres://user:pass@IP:PORT/DATABASE'
+POSTGRES = 'postgres://user:pass@IP:PORT/DATABASE'
