@@ -59,9 +59,10 @@ Step-by-step codes and description of the model's training available in models f
 
 3. Download TensorFlow models from here:
 `https://www.dropbox.com/s/vanhum3y5rb5x2d/models.zip?dl=0`
-   
-and unzip the files into etl folder
+ and unzip the files into etl folder
+ 
 4. Enter your Instagram credentials, Postgres and the tag you want to scrape in the config_example.py and copy it into etl and instagram_scraper
+
 5. Go to the main folder of the project in the terminal and run docker-compose build and afterward docker-compose up.
 
 ## Contacts:
